@@ -16,26 +16,37 @@ or
 Plugin configuration
 ====================
 
+production.ini configuration
+----------------------------
+
+Add ``provbz_auth`` the the ckan.plugins line
+
+     ckan.plugins = [...] provbz_auth
+     
+Configure external login and logout URLs:
+
+     ckanext.provbzauth.login_url = https://test-data.civis.bz.it/Shibboleth.sso/Login?target=https%3A%2F%2Ftest-data.civis.bz.it&authnContextClassRef=SPID+CNS+PROV.BZ+SIAG.IT+GVCC.NET+lang%3a{{LANG}}
+     ckanext.provbzauth.logout_url = https://test-data.civis.bz.it/Shibboleth.sso/Logout
+
+
 who.ini configuration
 ---------------------
 
-Add the ``plugin:provbz-auth`` section, customizing the env var names:
+Add the ``plugin:provbz_auth`` section, customizing the env var names:
 
-    [plugin:provbz-auth]
+    [plugin:provbz_auth]
     use = ckanext.provbzauth.repoze.ident:make_identification_plugin
 
-    session = YOUR_HEADER_FOR_Shib-Session-ID
-    eppn = YOUR_HEADER_FOR_eppn
-    mail = YOUR_HEADER_FOR_mail
-    fullname = YOUR_HEADER_FOR_cn
+    check_auth_key = HTTP_SHIB_ORIGINAL_AUTHENTICATION_INSTANT
+    check_auth_op = not_empty   
+    # check_auth_value=
 
-    check_auth_key=AUTH_TYPE
-    check_auth_value=
+    eppn = HTTP_SHIB_IDP_UID
+    authtype = HTTP_SHIB_AUTHTYPE
 
-``check_auth_key`` and ``check_auth_value`` are needed to find out if we are receiving info from the Shibboleth module. Customize both right-side values if needed. For instance, older Shibboleth implementations may need this configuration:
-
-    check_auth_key=HTTP_SHIB_AUTHENTICATION_METHOD 
-    check_auth_value=urn:oasis:names:tc:SAML:1.0:am:unspecified
+    pm_url = https://test-profilemanager....
+    pm_user = ...
+    pm_pw = ...
     
 
 Add ``provbz_auth`` to the list of the identifier plugins:
@@ -62,17 +73,6 @@ Add ``provbz_auth`` to the list of the challengers plugins:
     #    friendlyform;browser
     #   basicauth
 
-production.ini configuration
-----------------------------
-
-Add ``provbz_auth`` the the ckan.plugins line
-
-     ckan.plugins = [...] provbz_auth
-     
-Configure external login and logout URLs:
-
-     ckanext.provbzauth.login_url = https://test-data.civis.bz.it/Shibboleth.sso/Login?target=https%3A%2F%2Ftest-data.civis.bz.it&authnContextClassRef=SPID+CNS+PROV.BZ+SIAG.IT+GVCC.NET+lang%3a{{LANG}}
-     ckanext.provbzauth.logout_url = https://test-data.civis.bz.it/Shibboleth.sso/Logout
 
 External configuration
 ----------------------

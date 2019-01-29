@@ -45,29 +45,20 @@ class ProvBzIdentifierPlugin(object):
             return False
 
 
-    def __init__(self, session, eppn, mail, fullname, **kwargs):
+    def __init__(self, eppn, authtype, **kwargs):
         """
         Parameters here contain just names of the environment attributes defined
-        in who.ini, not their values:
-        @param session: 'Shib-Session-ID'
-        @param eppn: 'eppn'
-        @param organization: 'schacHomeOrganization'
-        etc.
+        in who.ini, not their values.
         """
 
         log.info("Initting ProvBzIdentifierPlugin...")
-
-        self.session = session
-        self.eppn = eppn
-        self.mail = mail
-        self.fullname = fullname
-        self.extra_keys = {}
 
         self.check_auth_key = kwargs['check_auth_key']
         self.check_auth_op = kwargs['check_auth_op']
         self.check_auth_value = kwargs['check_auth_value'] if 'check_auth_value' in kwargs else None
 
-        self.auth_type = kwargs['authtype']
+        self.eppn = eppn
+        self.auth_type = authtype
 
         self.pm_url = kwargs.get('pm_url')
         self.pm_user = kwargs.get('pm_user')
