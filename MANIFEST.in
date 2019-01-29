@@ -1,0 +1,2 @@
+recursive-include ckanext/provbzauth/templates       *
+recursive-include ckanext/provbzauth/i18n            *
