@@ -1,5 +1,4 @@
 # -*- coding: utf8 -*-
-# -*- coding: utf8 -*-
 '''
 Repoze.who plugin for ckanext-provbz-auth
 '''
@@ -237,16 +236,30 @@ class ProvBzIdentifierPlugin(object):
         # email = env.get(self.mail, None)
         authtype = env.get(self.auth_type, None)
 
-        if authtype not in ("PROV.BZ", "SIAG.IT"):
+        # openid userkey
+        userkey = None
+
+        if authtype in ("PROV.BZ", "SIAG.IT"):
+            if not eppn:
+                log.info('Environ does not contain user reference, user not loaded.')
+                return None
+
+            # compose user id : THIS IS INTEGRATION DEPENDANT!!!
+            userkey = eppn + "@" + authtype
+
+        elif authtype in ("SPID", "CNS"):
+            CF_KEY = "HTTP_SHIB_IDP_FISCALNUMBER"
+            cf = env[CF_KEY]
+            userkey = cf
+
+            if not cf:
+                log.info('Environ key %s is empty, user not loaded.', CF_KEY)
+                return None
+
+        else :
             log.info('AuthType %s not allowed', authtype)
+            self.dumpInfo(env)
             return None
-
-        if not eppn:
-            log.info('Environ does not contain user reference, user not loaded.')
-            return None
-
-        # compose user id : THIS IS INTEGRATION DEPENDANT!!!
-        userkey = eppn + "@" + authtype
 
         user = model.Session.query(model.User).autoflush(False) \
             .filter_by(openid=userkey).first()
@@ -261,14 +274,20 @@ class ProvBzIdentifierPlugin(object):
 
         else:  # user is None:
             log.info('User does not exists, creating new one.')
+            self.dumpInfo(env)
 
             user = self._get_user_profile(userkey, env)
             if not user:
                 log.warning("Can not retrieve user info")
                 return None
 
-            basename = unicode(userkey, errors='ignore').lower().replace(' ',
-                                                                         '_')
+            # ckan allows only [0-9] [a-z] '-' '_'
+            basename = unicode(userkey, errors='ignore')\
+                .lower()\
+                .replace(' ', '_')\
+                .replace('.', '_') \
+                .replace('@', '_')
+
             username = basename
             suffix = 0
             while not model.User.check_name_available(username):
@@ -276,6 +295,7 @@ class ProvBzIdentifierPlugin(object):
                 username = basename + str(suffix)
 
             user.name = username
+            # Pls note that other fields are already set
             # user = model.User(name=username,
             #                   fullname=fullname,
             #                   email=email,
@@ -317,6 +337,20 @@ class ProvBzIdentifierPlugin(object):
 
     def _get_user_profile(self, userkey, env):
 
+        authtype = env.get(self.auth_type, None)
+
+        if authtype in ("PROV.BZ", "SIAG.IT"):
+            return self._get_user_profile_from_profilemanager(userkey, env)
+
+        elif authtype in ("SPID"):
+            return self._get_user_profile_for_spid(userkey, env)
+
+        else:
+            return None
+
+    def _get_user_profile_from_profilemanager(self, userkey, env):
+        log.info('Creating user via profile manager, key %s', userkey)
+
         uid = env["HTTP_SHIB_IDP_UID"]
         inst = env["HTTP_SHIB_ORIGINAL_AUTHENTICATION_INSTANT"]
         idp = env["HTTP_SHIB_ORIGINAL_IDENTITY_PROVIDER"]
@@ -345,3 +379,14 @@ class ProvBzIdentifierPlugin(object):
 
         return user
 
+    def _get_user_profile_for_spid(self, userkey, env):
+        log.info('Creating user with SPID info, key %s', userkey)
+
+        fullname = env['HTTP_SHIB_IDP_NAME'] + ' ' + env['HTTP_SHIB_IDP_FAMILYNAME']
+        email = env['HTTP_SHIB_IDP_EMAIL']
+
+        user = model.User(fullname=fullname,
+                          email=email,
+                          openid=userkey)
+
+        return user
