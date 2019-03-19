@@ -22,9 +22,7 @@
 
   </fieldset>
 
-
-  {% if not data.openid  %}
-  <fieldset>
+  <fieldset {% if data.openid %}style="display: none;"{% endif %}>
     <legend>{{ _('Change password') }}</legend>
     {{ form.input('old_password',
                   type='password',
@@ -40,7 +38,6 @@
 
     {{ form.input('password2', type='password', label=_('Confirm Password'), id='field-password-confirm', value=data.password2, error=errors.password2, classes=['control-medium'], attrs={'autocomplete': 'off', 'class': 'form-control'}) }}
   </fieldset>
-{% endif %}
 
   <div class="form-actions">
     {% block delete_button %}
