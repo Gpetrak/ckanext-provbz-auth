@@ -22,16 +22,16 @@ Example:
   <!-- External login -->
   <div class="login-wrapper">
     <div class="login-text">
-      <h2>{{ _('SPID') }}</h2>
-      <p>{% trans %}Login through SPID.{% endtrans %}</p>
+      <h2>{{ _('myCIVIS') }}</h2>
+      <p>{% trans %}Login with myCIVIS (SPID, PROV.BZ or SIAG.IT){% endtrans %}</p>
     </div>
 
-    {#<p>{{ _("Authentication by using SPID login") }}</p><br />#}
+    {#<p>{{ _("Authentication by using myCIVIS login") }}</p><br />#}
     {% set came_from = h.get_request_param('came_from') %}
     {% set login_url = h.url_for(controller='ckanext.provbzauth.controller:ProvBzAuthController', action='external_login', came_from=came_from or '') %}
     <a tabindex="1" href="{{ login_url }}">
-        <div class="btn btn-large" title="{{ _('Login via SPID') }}">
-	Shibboleth
+        <div class="btn btn-large" title="{{ _('Login via myCIVIS') }}">
+	{{ _('myCIVIS') }}
 	</div>
     </a>
   </div>
@@ -50,7 +50,7 @@ Example:
       <input id="field-password" type="password" name="password" value="" placeholder="{{ _('Password') }}" tabindex="3">
 
       <label class="checkbox login-inline" for="field-remember">
-        <input id="field-remember" type="checkbox" name="remember" value="63072000" checked="" tabindex="4"> Remember me
+        <input id="field-remember" type="checkbox" name="remember" value="63072000" checked="" tabindex="4"> {{ _('Remember me') }}
       </label>
 
         {#{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error, attrs={'tabindex':'2'}) }#}
