@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-repoze-who-shibboleth 0.2.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-23 12:50+0200\n"
+"POT-Creation-Date: 2019-05-06 12:12+0200\n"
 "PO-Revision-Date: 2015-09-23 12:51+0200\n"
 "Last-Translator: etj@geo-solutions.it\n"
 "Language-Team: it <LL@li.org>\n"
@@ -18,35 +18,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: ckanext/repoze/who/shibboleth/controller.py:25
-msgid "No user info received for login"
-msgstr "Non sono state ricevute informazioni sull'utente"
+#: ckanext/provbzauth/templates/user/edit_user_form.html:7
+msgid "Change details"
+msgstr "Cambia dettagli"
 
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:25
-msgid "SPID"
-msgstr "SPID"
-
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:26
-msgid "Login through SPID."
-msgstr "Accedi attraverso SPID"
-
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:33
-msgid "Login via SPID"
-msgstr "Accedi attraverso SPID"
-
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:45
-msgid "Authentication by using local account"
-msgstr "Autenticazione con account locale"
-
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:49
+#: ckanext/provbzauth/templates/user/edit_user_form.html:8
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:49
 msgid "Username"
 msgstr "Nome utente"
 
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:50
+#: ckanext/provbzauth/templates/user/edit_user_form.html:10
+msgid "Full name"
+msgstr "Nome Intero"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:10
+msgid "eg. Joe Bloggs"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:12
+msgid "Email"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:12
+msgid "eg. joe@example.com"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:14
+msgid "About"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:14
+msgid "A little information about yourself"
+msgstr "Alcune informazioni su di te"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:17
+msgid "Subscribe to notification emails"
+msgstr "Sottoscrivi una email di notifica"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:26
+#, fuzzy
+#| msgid "Password"
+msgid "Change password"
+msgstr "Cambia Password"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:29
+msgid "Sysadmin Password"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:29
+#, fuzzy
+#| msgid "Password"
+msgid "Old Password"
+msgstr "Password"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:37
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:50
 msgid "Password"
 msgstr "Password"
 
-#: ckanext/repoze/who/shibboleth/templates/user/snippets/login_form.html:59
+#: ckanext/provbzauth/templates/user/edit_user_form.html:39
+msgid "Confirm Password"
+msgstr "Conferma Password"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:45
+msgid "Are you sure you want to delete this User?"
+msgstr "Sei sicuro che vuoi rimuovere l'utente"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:45
+msgid "Delete"
+msgstr "Cancella"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:50
+msgid "Are you sure you want to regenerate the API key?"
+msgstr "Sei sicuro che vuoi rigenerare la API key"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:50
+msgid "Regenerate API Key"
+msgstr "Rigenera API key"
+
+#: ckanext/provbzauth/templates/user/edit_user_form.html:54
+msgid "Update Profile"
+msgstr "Aggiorna Profilo"
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:25
+msgid "myCIVIS"
+msgstr ""
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:26
+msgid "Login with myCIVIS (SPID, PROV.BZ or SIAG.IT)"
+msgstr "Autenticazione con myCIVIS (SPID, PROV.BZ or SIAG.IT)"
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:33
+msgid "Login via myCIVIS"
+msgstr "Autenticazione con myCIVIS"
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:45
+msgid "Authentication by using local account"
+msgstr "Autenticazione con account locale"
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:59
 msgid "Log in"
 msgstr "Accedi"
+
+#: ckanext/provbzauth/templates/user/snippets/login_form.html:58
+msgid "Remember me"
+msgstr "Memorizza cedenziali"
+
+#~ msgid "No user info received for login"
+#~ msgstr "Non sono state ricevute informazioni sull'utente"
+
+#~ msgid "SPID"
+#~ msgstr "SPID"
+
+#~ msgid "Login through SPID."
+#~ msgstr "Accedi attraverso SPID"
+
+#~ msgid "Login via SPID"
+#~ msgstr "Accedi attraverso SPID"
 
