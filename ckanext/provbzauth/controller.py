@@ -6,6 +6,7 @@ import logging
 import re
 
 from pylons.i18n import _
+from pylons.controllers.util import redirect
 
 import ckan.controllers.user as user
 import ckan.lib.base as base
@@ -23,7 +24,14 @@ class ProvBzAuthController(user.UserController):
         locale = request.environ.get('CKAN_LANG')
         login_path = re.sub('{{LANG}}', str(locale), login_path)
 
-        return base.h.redirect_to(login_path)
+        log.debug("REDIRECTING TO " + login_path )
+
+        # TODO: we whoud check if the login_path is relative or absolute.
+        #    When relative, we should use base.h.redirect_to(login_path),
+        #    but the apache shibboleth filter should be aware of the
+        #    language path part (e.g. /it )
+
+        return redirect(login_path)
 
         # if base.c.userobj is not None:
         #     log.info("Repoze.who Shibboleth controller received userobj %r " % base.c.userobj)
