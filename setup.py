@@ -33,12 +33,12 @@ setup(
             ('**/templates/**.html', 'ckan', None),
             ],
     },
-    entry_points={
-        'ckan.plugins': [
-            'provbz_auth=ckanext.provbzauth.plugin:ProvBzAuthPlugin',
-         ],
-        'babel.extractors': [
-            'ckan=ckan.lib.extract:extract_ckan',
-         ],
-    },
+    entry_points=
+       """
+       [ckan.plugins]
+       provbz_auth=ckanext.provbzauth.plugin:ProvBzAuthPlugin
+       [babel.extractors]
+       ckan = ckan.lib.extract:extract_ckan
+       """,
+    
 )

@@ -1,11 +1,11 @@
 '''
 SPID authentication plugin for CKAN
 '''
-
-import logging
-
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+
+import ckanext.provbzauth.views as views
+import logging
 
 # from ckan.lib.plugins import DefaultTranslation  # CKAN 2.5 only
 
@@ -20,7 +20,9 @@ class ProvBzAuthPlugin(plugins.SingletonPlugin
     ProvBz auth plugin for CKAN
     '''
 
-    plugins.implements(plugins.IRoutes, inherit=True)
+    # IBlueprint
+    plugins.implements(plugins.IBlueprint)
+    # plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IConfigurer)
     # plugins.implements(plugins.ITranslation)  # CKAN 2.5 only
 
@@ -31,6 +33,13 @@ class ProvBzAuthPlugin(plugins.SingletonPlugin
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
 
+    
+    # Implementation of IBlueprints
+    # ------------------------------------------------------------
+    def get_blueprint(self):
+        return views.get_blueprints()
+    
+    '''
     def before_map(self, map):
         """
         Override IRoutes.before_map()
@@ -47,3 +56,4 @@ class ProvBzAuthPlugin(plugins.SingletonPlugin
                     action='external_logout')
 
         return map
+    '''

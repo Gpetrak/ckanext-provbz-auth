@@ -27,10 +27,11 @@ Example:
     </div>
 
     {#<p>{{ _("Authentication by using myCIVIS login") }}</p><br />#}
-    {% set came_from = h.get_request_param('came_from') %}
-    {% set login_url = h.url_for(controller='ckanext.provbzauth.controller:ProvBzAuthController', action='external_login', came_from=came_from or '') %}
+    {# {% set came_from = h.get_request_param('came_from') %} #}
+    {# {% set login_url = h.url_for('ProvBzAuthController.external_login', came_from=came_from or '') %} #}
+    {% set login_url = h.url_for('auth_blueprints.external_login') %}
     <a tabindex="1" href="{{ login_url }}">
-        <div class="btn btn-large" title="{{ _('Login via myCIVIS') }}">
+        <div class="btn btn-light btn-lg" title="{{ _('Login via myCIVIS') }}">
 	{{ _('myCIVIS') }}
 	</div>
     </a>

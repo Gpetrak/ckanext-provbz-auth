@@ -5,8 +5,8 @@ Repoze.who ProvBzAuthController controller
 import logging
 import re
 
-from pylons.i18n import _
-from pylons.controllers.util import redirect
+from ckan.lib.i18n import _
+# from pylons.controllers.util import redirect
 
 import ckan.controllers.user as user
 import ckan.lib.base as base
@@ -31,7 +31,7 @@ class ProvBzAuthController(user.UserController):
         #    but the apache shibboleth filter should be aware of the
         #    language path part (e.g. /it )
 
-        return redirect(login_path)
+        return redirect_to(login_path)
 
         # if base.c.userobj is not None:
         #     log.info("Repoze.who Shibboleth controller received userobj %r " % base.c.userobj)
@@ -46,5 +46,6 @@ class ProvBzAuthController(user.UserController):
     def external_logout(self):
 
         logout_path = base.config.get("ckanext.provbzauth.logout_url", "/shibboleth/logout")
+        logout_path = 'test_logout'
 
         return base.h.redirect_to(logout_path)
