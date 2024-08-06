@@ -20,11 +20,11 @@ class ProvBzAuthPlugin(plugins.SingletonPlugin
     ProvBz auth plugin for CKAN
     '''
 
-    # IBlueprint
+    # Interfaces
     plugins.implements(plugins.IBlueprint)
-    # plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(plugins.IConfigurer)
-    # plugins.implements(plugins.ITranslation)  # CKAN 2.5 only
+    plugins.implements(plugins.IAuthenticator, inherit=True)
+    
 
     def update_config(self, config):
         """

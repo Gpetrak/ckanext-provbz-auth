@@ -7,7 +7,7 @@ import ckan.lib.base as base
 from ckan.lib.helpers import redirect_to
 from ckan import model
 from ckan.plugins.toolkit import render
-from ckan.views.user import rotate_token
+from ckan.views.user import rotate_token, logout
 from ckan.lib.helpers import helper_functions as h
 # import re
 import requests
@@ -43,12 +43,13 @@ def external_login():
     # locale = request.environ.get('CKAN_LANG')
     # login_path = re.sub('{{LANG}}', str(locale), login_path)
 
-    log.info("REDIRECTING TO %r", redirect_to(resp.url))
-
     # TODO: we whoud check if the login_path is relative or absolute.
     #    When relative, we should use base.h.redirect_to(login_path),
     #    but the apache shibboleth filter should be aware of the
     #    language path part (e.g. /it )
+
+    # Logout from the CKAN account
+    #logout_user()
 
     return redirect_to(resp.url)
 
@@ -111,7 +112,7 @@ def do_authenticate():
             login_user(new_user)
             rotate_token()
 
-            return h.redirect_to(u'http://localhost:5000')
+            return h.redirect_to(u'home.index')
             
         else:
 
@@ -119,9 +120,9 @@ def do_authenticate():
             login_user(user)
             rotate_token()
 
-            return h.redirect_to(u'http://localhost:5000')
+            return h.redirect_to(u'home.index')
 
-        return redirect_to("http://localhost:5000/user/login")
+        return redirect_to(u'home.index')
     
     
 
@@ -129,6 +130,7 @@ def do_authenticate():
 @auth_blueprints.route('/redirect_external_logout')
 def external_logout():
     
+    # Logout from the SSO
     # Retrieve the logout redirected path from the configuration file
     logout_resp = requests.get(
                       base.config.get("ckanext.provbzauth.logout_url"),
@@ -137,6 +139,9 @@ def external_logout():
                       )
     
     log.info("logout URL %r", logout_resp.url)
+ 
+    # CKAN logout
+    logout()
 
     return redirect_to(logout_resp.url)
 
