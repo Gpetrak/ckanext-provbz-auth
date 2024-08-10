@@ -1,0 +1,215 @@
+{% set locale = h.get_locale() %}
+
+<footer class="site-footer">
+  <div class="container ck-row-footer">
+    {% block footer_content %}
+	<div class="row">
+	  <!-- <div class="footer-left"> -->
+	  <div class="col-md-3 footer-links">
+		<nav class="footer-links">
+			{% block footer_nav %}
+			  <ul class="list-unstyled footer-lks">
+				{% block footer_links %}
+				  {# <!--li><a href="{{ h.url_for(controller='home', action='about') }}">{{ _('About {0}').format(g.site_title) }}</a></li--> #}
+				  <li>
+					  <a href={{ h.getLocalizedPageLink('info') }}>
+						  <i class="icon-comment footer_icon"></i>
+						  {% trans %}Informazioni Dati Alto Adige{% endtrans %}
+					  </a>
+				  </li>
+				  <li>
+					  <a href={{ h.getLocalizedPageLink('faq') }}>
+						  <i class="icon-question footer_icon"></i>
+						  {% trans %}Domande frequenti{% endtrans %}
+					  </a>
+				  </li>
+				  <li>
+					  <a href="/revision/list?format=atom">
+						<i class="icon-rss footer_icon"></i> 
+						{% trans %}Atom Feed{% endtrans %}
+					  </a>
+				  </li>
+				  <li>
+					<a href={{ h.getLocalizedPageLink('acknowledgements') }}>
+					  <i class="icon-user footer_icon"></i>
+					  {% trans %}Ringraziamenti{% endtrans %}
+					</a>
+				  </li>
+				  <li>
+					<a href={{ h.getLocalizedPageLink('legal') }}>
+					  <i class="icon-legal footer_icon"></i>
+					  {% trans %}Note legali{% endtrans %}
+					</a>
+				  </li>
+				  <li>
+					<a href={{ h.getLocalizedPageLink('privacy') }}>
+					  <i class="icon-key footer_icon"></i>
+					  {% trans %}Privacy{% endtrans %}
+					</a>
+				  </li>
+				  <li>
+					<a href="mailto:opendata@retecivica.bz.it">
+					  <i class="icon-share-alt footer_icon"></i>
+					  {% trans %}Contattaci{% endtrans %}
+					</a>
+				  </li>
+				  <li>
+					{% if locale == 'de' %}
+						<a href="http://www.buergernetz.bz.it/de/cookie.asp" target="_blank">
+						  <i class="icon-bullseye footer_icon"></i>
+						  {% trans %}Cookie{% endtrans %}
+						</a>
+					{% else %}
+						<a href="http://www.retecivica.bz.it/it/cookie.asp" target="_blank">
+						  <i class="icon-bullseye footer_icon"></i>
+						  {% trans %}Cookie{% endtrans %}
+						</a>
+					{% endif %}
+				  </li>
+				{% endblock %}
+			  </ul>
+
+			  <ul class="list-unstyled copyrights">
+				  <li>
+					{% if locale == 'de' %}
+					  © 2015 Autonome Provinz Bozen - Südtiroler Informatik AG • Steuernummer: 00390090215 
+					  PEC: 
+					  <a href="mailto:generaldirektion.direzionegenerale@pec.prov.bz.it">
+						generaldirektion.direzionegenerale@pec.prov.bz.it
+				      </a>
+					{% else %}
+					  © 2015 Provincia autonoma di Bolzano - Informatica Alto Adige SPA • Cod. Fisc.: 00390090215
+					  PEC: 
+					  <a href="mailto:generaldirektion.direzionegenerale@pec.prov.bz.it">
+						generaldirektion.direzionegenerale@pec.prov.bz.it
+				      </a>
+					{% endif %}
+				  </li>
+			  </ul>
+			{% endblock %}
+		</nav>	  
+	  </div>
+	  
+	  <!-- <div class="footer-center"> -->
+		<div class="col-md-3">	
+		<nav class="footer-links">	  
+			<ul class="list-unstyled">
+				{% block footer_links_ckan %}
+				  {% set api_url = 'https://docs.ckan.org/en/2.10/api/index.html' %}
+
+				  <li><a href="{{ api_url }}">{{ _('CKAN API') }}</a></li>
+				  <li><a href="http://www.okfn.org/">{{ _('Open Knowledge Foundation') }}</a></li>
+				  <li><a href="http://www.opendefinition.org/okd/"><img src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png"></a></li>
+				  <li>
+					<p class="powered-by">
+					   <strong>{% trans %}Realizzato con{% endtrans %}</strong> <a class="ckan-footer-logo" href="http://ckan.org"><span>CKAN</span></a>
+					</p>
+				  </li>
+				{% endblock %}
+			</ul>
+		</nav>
+	  </div>
+	  
+      <!-- <div class="attribution footer-right"> -->
+		<div class="col-md-3 attribution">
+        {#% block footer_attribution %}
+          <p>{% trans %}<strong>Powered by</strong> <a class="hide-text ckan-footer-logo" href="http://ckan.org">CKAN</a>{% endtrans %}</p>
+        {% endblock %#}
+        
+		<img src="{{h.url_for_static('/images/logo/opendata_suedtirol_logo_bw.png')}}" alt="Logo Open Data Alto Adige" class="logo_footer">
+		
+		<!-- User Login part -->
+		{% if c.userobj %}
+          <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
+            <ul class="unstyled">
+              {% block header_account_logged %}
+              {% if c.userobj.sysadmin %}
+                  {#<li>
+				    <a href="{{ h.url_for('pages_index') }}" title="{{ _('Pages') }}">
+				      <i class="icon-file"></i>
+				    </a>
+				  </li> #}
+				  {#<!--li>
+				    <a href="{{ h.url_for('blog_index') }}" title="{{ _('Blog') }}">
+				      <i class="icon-pencil"></i>
+				    </a>
+				  </li--> #}
+
+                <li>
+                  <a href="{{ h.url_for('admin.index') }}" title="{{ _('Sysadmin settings') }}">
+                    <i class="icon-legal"></i>
+                  </a>
+                </li>
+              {% endif %}
+              <li>
+                <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                  {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
+                  <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+              </li>
+              {% set new_activities = h.new_activities() %}
+              <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
+                {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
+                <a href="{{ h.url_for('activity.dashboard') }}" title="{{ notifications_tooltip }}">
+                  <i class="fa-solid fa-gauge"></i>
+                  <span>{{ new_activities }}</span>
+                </a>
+              </li>
+              {% block header_account_settings_link %}
+                <li>
+                  <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit settings') }}">
+                    <i class="fa-solid fa-gear"></i>
+                  </a>
+                </li>
+              {% endblock %}
+              {% block header_account_log_out_link %}
+                <li>
+                  <a href="{{ h.url_for('auth_blueprints.external_logout') }}" title="{{ _('Log out') }}">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  </a>
+                </li>
+              {% endblock %}
+              {% endblock %}
+            </ul>
+          </div>
+        {% else %}
+          {#<!--nav class="account not-authed">
+            <ul class="unstyled">
+              {# % block header_account_notlogged %}
+			  <li><i class="icon-lock"></i>{% link_for _('ACCEDI AL GEOPORTALE'), controller='user', action='login' %}</li>
+              {% endblock %}
+            </ul>
+          </nav--> #}
+          <nav class="account not-authed">
+            <ul class="unstyled">
+              {% block header_account_notlogged %}
+	              {# { % set came_from = h.get_request_param('came_from') %}
+			      {% set login_url = h.url_for('ShibbolethController.shiblogin', came_from=came_from or '') %}
+			      {% set url = h.checkForShibboletURL(login_url) %} #}
+				  {# <li><i class="icon-lock"></i><a tabindex="1" href="{{ url }}">{{ _('ACCEDI AL GEOPORTALE') }}</a></li> #}
+
+                     {# <li>{% link_for _('Log in'), controller='user', action='login' %}</li>#}
+                      <li><i class="icon-lock"></i>{% link_for _('ACCEDI AL GEOPORTALE'), controller='user', action='login' %}</li>
+
+	              {# % if h.check_access('user_create') %}
+	                <li>{% link_for _('Register'), 'user.register', class_='sub' %}</li>
+	              {% endif % #}
+              {% endblock %}
+            </ul>
+          </nav>
+        {% endif %}
+		
+		{% block footer_lang %}
+          {% snippet "snippets/language_selector.html" %}
+        {% endblock %}
+      </div>
+	</div>
+    {% endblock %}
+  </div>
+
+  {#{% block footer_debug %}
+    {% if g.debug %}
+      {% include 'snippets/debug.html' %}
+    {% endif %}
+  {% endblock %}#}
+</footer>

@@ -122,7 +122,7 @@ def do_authenticate():
 
             return h.redirect_to(u'home.index')
 
-        return redirect_to(u'home.index')
+        return h.redirect_to(u'home.index')
     
     
 
