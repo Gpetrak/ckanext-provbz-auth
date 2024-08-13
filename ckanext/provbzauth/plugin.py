@@ -13,9 +13,8 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class ProvBzAuthPlugin(plugins.SingletonPlugin
-     # , DefaultTranslation  # CKAN 2.5 only
-    ):
+class ProvBzAuthPlugin(plugins.SingletonPlugin):
+     # DefaultTranslation  # CKAN 2.5 only
     '''
     ProvBz auth plugin for CKAN
     '''

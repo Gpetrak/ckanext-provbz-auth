@@ -55,16 +55,6 @@ def external_login():
 
     return redirect_to(resp.url)
 
-    # if base.c.userobj is not None:
-    #     log.info("Repoze.who Shibboleth controller received userobj %r " % base.c.userobj)
-    #     return base.h.redirect_to(controller='user',
-    #                               action='read',
-    #                               id=base.c.userobj.name)
-    # else:
-    #     log.error("No userobj received in Repoze.who Shibboleth controller %r " % base.c)
-    #     base.h.flash_error(_("No user info received for login"))
-    #     return base.h.redirect_to('/')
-
 # This view retrieves the token and validates it.
 # The endpoint "http://localhost:5000/auth_bz" is the targetUrl parameter of the api/Auth/login from
 # the API documentation: https://sso.civis.bz.it/swagger/index.html
@@ -125,9 +115,6 @@ def do_authenticate():
             return h.redirect_to(u'home.index')
 
         return h.redirect_to(u'home.index')
-    
-    
-
 
 @auth_blueprints.route('/redirect_external_logout')
 def external_logout():
