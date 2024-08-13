@@ -1,4 +1,4 @@
-SPID authentication plugin for CKAN 2.4. 
+SPID authentication plugin for CKAN 2.10. 
 
 Install
 =======
