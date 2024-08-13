@@ -51,6 +51,8 @@ def external_login():
     # Logout from the CKAN account
     #logout_user()
 
+    log.info("URL %r", resp.url)
+
     return redirect_to(resp.url)
 
     # if base.c.userobj is not None:
